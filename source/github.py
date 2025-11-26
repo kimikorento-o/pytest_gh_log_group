@@ -18,8 +18,13 @@ class Github:
     def write_line(self, data: str):
         """ write line using reporter """
         if self._reporter:
-            self._reporter.ensure_newline()
-            self._reporter.write_line(data, flush=True)
+            try:
+                self._reporter.ensure_newline()
+                self._reporter.write_line(data, flush=True)
+            except ValueError:
+                # ValueError: I/O operation on closed file
+                # Stream already closed (e.g., by pytester fixture)
+                pass
 
 
     def start_github_group(self, name: str, prefix="", postfix="") -> None:
@@ -39,6 +44,11 @@ class Github:
             # GitHub doesn't support nested grouping
             return
         if self._reporter:
-            self._reporter.line('')
+            try:
+                self._reporter.line('')
+            except ValueError:
+                # ValueError: I/O operation on closed file
+                # Stream already closed (e.g., by pytester fixture)
+                pass
         self.write_command('endgroup')
         self._active_group = None
