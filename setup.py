@@ -5,7 +5,7 @@ https://github.com/pypa/sampleproject
 """
 
 # Always prefer setuptools over distutils
-from setuptools import setup, find_packages
+from setuptools import setup
 from os import path
 
 
@@ -43,10 +43,9 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.7'
     ],
-    packages=find_packages(exclude=['tests']),
+    packages=['source'],
     keywords="py.test pytest github actions log grouping",
     python_requires='>=3.7, <4',
-    package_dir={'': 'source'},
     entry_points={
         'pytest11': ['pytest_gh_log_group = source.plugin']
     },
